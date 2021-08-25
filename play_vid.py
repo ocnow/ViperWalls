@@ -4,8 +4,11 @@ import youtube_dl
 
 if __name__ == '__main__':
 
-    video_url = 'https://www.youtube.com/watch?v=ld1Aw4wwNIM'
+    #video_url = 'https://www.youtube.com/watch?v=ld1Aw4wwNIM'
     #video_url = 'https://www.youtube.com/watch?v=GkzBDAaqiY4'
+    sent_vs_100t_url = 'https://www.youtube.com/watch?v=SOICMYLVA48'
+    v1_vs_tl_url = 'https://www.youtube.com/watch?v=WRyxwq1lx4c'
+    video_url = v1_vs_tl_url
 
     ydl_opts = {}
 
@@ -34,7 +37,7 @@ if __name__ == '__main__':
                 print('video not opened')
                 exit(-1)
 
-            cap.set(cv2.CAP_PROP_POS_MSEC,832000)
+            cap.set(cv2.CAP_PROP_POS_MSEC,24000)
 
             while True:
                 # read frame
