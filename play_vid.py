@@ -4,11 +4,11 @@ import youtube_dl
 
 if __name__ == '__main__':
 
+    #read mask
+    mask = cv2.imread('images/breeze_map/new_map_mask.jpg')
     #video_url = 'https://www.youtube.com/watch?v=ld1Aw4wwNIM'
     #video_url = 'https://www.youtube.com/watch?v=GkzBDAaqiY4'
-    sent_vs_100t_url = 'https://www.youtube.com/watch?v=SOICMYLVA48'
-    v1_vs_tl_url = 'https://www.youtube.com/watch?v=WRyxwq1lx4c'
-    video_url = v1_vs_tl_url
+    video_url = 'https://www.youtube.com/watch?v=7tYIN73gRzc'
 
     ydl_opts = {}
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
                 print('video not opened')
                 exit(-1)
 
-            cap.set(cv2.CAP_PROP_POS_MSEC,24000)
+            cap.set(cv2.CAP_PROP_POS_MSEC,139000)
 
             while True:
                 # read frame
@@ -48,24 +48,18 @@ if __name__ == '__main__':
                     break
 
                 game_shape = frame.shape
-                map_frame = frame[0:int(game_shape[0]/2.4),0:game_shape[1]//4]
+                map_frame = frame[0:int(game_shape[0]/2.4),30:int(game_shape[1]/4.5)]
 
-                b,g,r = cv2.split(map_frame)
-                ret,g1 = cv2.threshold(g,177,255,cv2.THRESH_BINARY)
-                ret,b1 = cv2.threshold(b,190,255,cv2.THRESH_BINARY)
-                ret,r1 = cv2.threshold(r,152,255,cv2.THRESH_BINARY)
-
-                b_not = cv2.bitwise_not(b1)
-                r_not = cv2.bitwise_not(r1)
-
-                g1_bnot = cv2.bitwise_and(g1,b_not)
-                g1_brnot = cv2.bitwise_and(g1,r_not)
+                #print(map_frame.shape)
 
                 cv2.imshow('game',frame)
                 cv2.imshow('map',map_frame)
-                cv2.imshow('viperwall',g1_brnot)
+
+                bt_and = cv2.bitwise_and(map_frame,mask)
+
+                cv2.imshow('map2',bt_and)
                 if cv2.waitKey(30)&0xFF == ord('q'):
-                    #cv2.imwrite('map_frame_image.jpg',map_frame)
+                    #cv2.imwrite('current_map.jpg',map_frame)
                     break
             break
             # release VideoCapture
